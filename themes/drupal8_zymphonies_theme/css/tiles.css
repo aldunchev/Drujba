@@ -1,0 +1,9 @@
+.tiles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tiles img {
+  box-shadow: 0 0 10px 0px #2e2e2e;
+}

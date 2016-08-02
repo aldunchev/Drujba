@@ -1,4 +1,4 @@
-@media (min-width: 767px) {
+@media (min-width: 991px) {
 
   .region-primary-menu{
     display: inline-block;
@@ -9,6 +9,7 @@
 
   .region-primary-menu,
   .menu-base-theme li a {
+    display: block !important;
     background: none;
   }
 
@@ -81,4 +82,13 @@
   .comment-wrap .author-details{ width: 10%; }
 
   .comment-wrap .author-comments{ width: 90%;}
+}
+
+@media (max-width: 991px) {
+  .navbar-toggle {
+    display: block;
+  }
+  .navbar-header {
+    float: none;
+  }
 }

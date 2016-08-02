@@ -1,0 +1,13 @@
+.carousel-cell {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .node--type-gallery {
+    width: 75%;
+  }
+}
+
+.page-node-type-gallery .region-page-title h1 {
+  text-align: center;
+}

@@ -1,0 +1,7 @@
+{{ attach_library('drupal8_zymphonies_theme/flickity') }}
+
+<div class="carousel" data-flickity='{ "wrapAround": true }'>
+  {% for item in items %}
+    <div class="carousel-cell">{{ item.content }}</div>
+  {% endfor %}
+</div>

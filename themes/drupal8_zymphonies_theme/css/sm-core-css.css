@@ -93,7 +93,7 @@
   border-top: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
 	
   .menu-base-theme ul {
     position: absolute;

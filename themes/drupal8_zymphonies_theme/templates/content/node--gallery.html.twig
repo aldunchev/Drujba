@@ -1,0 +1,14 @@
+{%
+  set classes = [
+    'center-block box-shadow',
+    'node--type-' ~ node.bundle|clean_class,
+  ]
+%}
+<a href="/gallery" class="link-back"><i class="fa fa-arrow-left" aria-hidden="true"></i>{{ 'Назад към галерията'|t }}</a>
+<article{{ attributes.addClass(classes) }}>
+
+  <div{{ content_attributes.addClass('node__content') }}>
+    {{ content }}
+  </div>
+
+</article>

@@ -12,7 +12,7 @@ p {
 h1,
 .h1 { 
   font-size: 32px;
-  color: #000;
+  color: #f40669;
 }
 
 h2,
@@ -61,6 +61,12 @@ ul.links.inline li {
 body {
   padding-top: 70px;
   background-color: #f8f8f8;
+  font-family: 'Kurale', cursive;
+  font-size: 16px;
+}
+
+#wrapper {
+  margin-bottom: 20px;
 }
 
 .content-bg-primary .region-content {
@@ -102,6 +108,7 @@ body.toolbar-fixed.toolbar-vertical .main-header {
 }
 
 .region-header .brand {
+  max-width: 250px;
   line-height: 1;
   font-style: italic;
 }
@@ -132,13 +139,19 @@ body.toolbar-fixed.toolbar-vertical .main-header {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(95, 95, 95, 0.5);
+  background: rgba(95, 95, 95, 0.3);
 }
 
 .welcome-banner-text {
   max-width: 600px;
   padding: 140px 0;
   text-align: center;
+}
+
+@media (max-width: 991px) {
+  .welcome-banner-text {
+    padding: 70px 0;
+  }
 }
 
 .welcome-banner-text h1 {
@@ -355,11 +368,6 @@ nav h2 {
   background: none;
 }
 
-.menu-base-theme li a {
-  font-weight: 700;
-  background: #fbfbfb;
-}
-
 .main-menu {
   position: relative;
   z-index: 9999;
@@ -380,6 +388,10 @@ nav h2 {
   text-transform: uppercase;
   color: #a84a9e;
   transition: color 200ms ease;
+}
+
+.menu-base-theme a.is-active {
+  color: #f40669;
 }
 
 .menu-base-theme li a:hover,

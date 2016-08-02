@@ -25,7 +25,6 @@ global-components:
   js:  
     js/jquery.smartmenus.min.js: {}
     js/custom.js: {}
-    js/articles.js: {}
   dependencies:
     - core/jquery
     - core/drupal.ajax
@@ -33,3 +32,18 @@ global-components:
     - core/drupalSettings
     - core/jquery.once
     - core/backbone
+
+tiles:
+  Version: 1.x
+  css:
+    theme:
+      css/tiles.css: {}
+
+flickity:
+  version: 1.x
+  css:
+    theme:
+      includes/flickity/flickity.css: {}
+      css/carousel.css: {}
+  js:
+    includes/flickity/flickity.pkgd.min.js: {}

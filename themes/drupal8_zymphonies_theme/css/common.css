@@ -4,7 +4,11 @@
 }
 
 .fa {
-  color: #13ADB3;
+  color: #a84a9e;
+}
+
+a:hover .fa {
+  color: #f40669;
 }
 
 .fa-facebook {
@@ -32,4 +36,25 @@
 
 .family-lobster {
   font-family: 'Lobster';
+}
+
+.align-left {
+  margin-right: 20px;
+}
+
+.align-right {
+  margin-left: 20px;
+}
+
+.link-back {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.link-back .fa {
+  margin-right: 2px;
+}
+
+.box-shadow {
+  box-shadow: 0 0 10px 0px #2e2e2e;
 }
