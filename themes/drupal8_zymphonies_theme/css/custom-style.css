@@ -113,6 +113,14 @@ body.toolbar-fixed.toolbar-vertical .main-header {
   font-style: italic;
 }
 
+.region-header .brand img {
+  max-height: 44px;
+}
+
+.region-header .brand a {
+  outline: none !important;
+}
+
 .site-name a {
   font-size: 26px;
   color: #fff;
