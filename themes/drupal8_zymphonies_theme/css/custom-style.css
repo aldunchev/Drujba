@@ -63,6 +63,9 @@ body {
   background-color: #f8f8f8;
   font-family: 'Kurale', cursive;
   font-size: 16px;
+  background-image: url('../images/flowers_texture-1.jpg');
+  background-repeat: repeat;
+  background-position: center;
 }
 
 #wrapper {
