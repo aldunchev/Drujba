@@ -31,7 +31,6 @@ global-components:
     - core/drupal
     - core/drupalSettings
     - core/jquery.once
-    - core/backbone
 
 tiles:
   Version: 1.x
