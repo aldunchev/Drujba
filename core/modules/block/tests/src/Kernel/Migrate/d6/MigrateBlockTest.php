@@ -28,6 +28,10 @@ class MigrateBlockTest extends MigrateDrupal6TestBase {
    */
   protected function setUp() {
     parent::setUp();
+
+    // Install the themes used for this test.
+    $this->container->get('theme_installer')->install(['bartik', 'seven', 'test_theme']);
+
     $this->installConfig(['block_content']);
     $this->installEntitySchema('block_content');
 
@@ -36,9 +40,6 @@ class MigrateBlockTest extends MigrateDrupal6TestBase {
     $config->set('default', 'bartik');
     $config->set('admin', 'seven');
     $config->save();
-
-    // Install one of D8's test themes.
-    \Drupal::service('theme_handler')->install(['test_theme']);
 
     $this->executeMigrations([
       'd6_filter_format',
@@ -49,6 +50,7 @@ class MigrateBlockTest extends MigrateDrupal6TestBase {
       'd6_user_role',
       'd6_block',
     ]);
+    block_rebuild();
   }
 
   /**
@@ -68,18 +70,21 @@ class MigrateBlockTest extends MigrateDrupal6TestBase {
    *   The block label.
    * @param string $label_display
    *   The block label display setting.
+   * @param bool $status
+   *   Whether the block is expected to be enabled or disabled.
    */
-  public function assertEntity($id, $visibility, $region, $theme, $weight, $label, $label_display) {
+  public function assertEntity($id, $visibility, $region, $theme, $weight, $label, $label_display, $status = TRUE) {
     $block = Block::load($id);
     $this->assertTrue($block instanceof Block);
-    $this->assertIdentical($visibility, $block->getVisibility());
-    $this->assertIdentical($region, $block->getRegion());
-    $this->assertIdentical($theme, $block->getTheme());
-    $this->assertIdentical($weight, $block->getWeight());
+    $this->assertSame($visibility, $block->getVisibility());
+    $this->assertSame($region, $block->getRegion());
+    $this->assertSame($theme, $block->getTheme());
+    $this->assertSame($weight, $block->getWeight());
+    $this->assertSame($status, $block->status());
 
     $config = $this->config('block.block.' . $id);
-    $this->assertIdentical($label, $config->get('settings.label'));
-    $this->assertIdentical($label_display, $config->get('settings.label_display'));
+    $this->assertSame($label, $config->get('settings.label'));
+    $this->assertSame($label_display, $config->get('settings.label_display'));
   }
 
   /**
@@ -122,7 +127,7 @@ class MigrateBlockTest extends MigrateDrupal6TestBase {
     $visibility['request_path']['id'] = 'request_path';
     $visibility['request_path']['negate'] = TRUE;
     $visibility['request_path']['pages'] = '/node/1';
-    $this->assertEntity('system', $visibility, 'footer', 'bartik', -5, '', '0');
+    $this->assertEntity('system', $visibility, 'footer_fifth', 'bartik', -5, '', '0');
 
     // Check menu blocks
     $visibility = [];
@@ -137,7 +142,9 @@ class MigrateBlockTest extends MigrateDrupal6TestBase {
     $visibility['request_path']['id'] = 'request_path';
     $visibility['request_path']['negate'] = FALSE;
     $visibility['request_path']['pages'] = '/node';
-    $this->assertEntity('block_1', $visibility, 'sidebar_second', 'bluemarine', -4, 'Another Static Block', 'visible');
+    // We expect this block to be disabled because '' is not a valid region,
+    // and block_rebuild() will disable any block in an invalid region.
+    $this->assertEntity('block_1', $visibility, '', 'bluemarine', -4, 'Another Static Block', 'visible', FALSE);
 
     $visibility = [];
     $this->assertEntity('block_2', $visibility, 'right', 'test_theme', -7, '', '0');

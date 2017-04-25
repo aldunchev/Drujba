@@ -30,7 +30,7 @@ abstract class MigrateUpgradeTestBase extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['migrate_drupal_ui', 'telephone'];
+  public static $modules = ['language', 'content_translation', 'migrate_drupal_ui', 'telephone'];
 
   /**
    * {@inheritdoc}
@@ -101,10 +101,10 @@ abstract class MigrateUpgradeTestBase extends WebTestBase {
   /**
    * Executes all steps of migrations upgrade.
    */
-  protected function testMigrateUpgrade() {
+  public function testMigrateUpgrade() {
     $connection_options = $this->sourceDatabase->getConnectionOptions();
     $this->drupalGet('/upgrade');
-    $this->assertText('Upgrade a Drupal site by importing it into a clean and empty new install of Drupal 8. You will lose any existing configuration once you import your site into it. See the upgrading handbook for more detailed information.');
+    $this->assertText('Upgrade a site by importing it into a clean and empty new install of Drupal 8. You will lose any existing configuration once you import your site into it. See the online documentation for Drupal site upgrades for more detailed information.');
 
     $this->drupalPostForm(NULL, [], t('Continue'));
     $this->assertText('Provide credentials for the database of the Drupal site you want to upgrade.');
@@ -162,7 +162,7 @@ abstract class MigrateUpgradeTestBase extends WebTestBase {
         $source_id_values = array_values(unserialize($source_id));
         $row = $id_map->getRowBySource($source_id_values);
         $destination = serialize($id_map->currentDestination());
-        $message = "Successful migration of $source_id to $destination as part of the {$migration->id()} migration. The source row status is " . $row['source_row_status'];
+        $message = "Migration of $source_id to $destination as part of the {$migration->id()} migration. The source row status is " . $row['source_row_status'];
         // A completed migration should have maps with
         // MigrateIdMapInterface::STATUS_IGNORED or
         // MigrateIdMapInterface::STATUS_IMPORTED.
@@ -174,6 +174,8 @@ abstract class MigrateUpgradeTestBase extends WebTestBase {
         }
       }
     }
+    \Drupal::service('module_installer')->install(['forum']);
+    \Drupal::service('module_installer')->install(['book']);
   }
 
   /**
