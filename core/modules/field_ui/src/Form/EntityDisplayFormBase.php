@@ -125,7 +125,7 @@ abstract class EntityDisplayFormBase extends EntityForm {
    */
   protected function getFieldDefinitions() {
     $context = $this->displayContext;
-    return array_filter($this->entityManager->getFieldDefinitions($this->entity->getTargetEntityTypeId(), $this->entity->getTargetBundle()), function(FieldDefinitionInterface $field_definition) use ($context) {
+    return array_filter($this->entityManager->getFieldDefinitions($this->entity->getTargetEntityTypeId(), $this->entity->getTargetBundle()), function (FieldDefinitionInterface $field_definition) use ($context) {
       return $field_definition->isDisplayConfigurable($context);
     });
   }
@@ -210,6 +210,7 @@ abstract class EntityDisplayFormBase extends EntityForm {
         if ($enabled_displays = array_filter($this->getDisplayStatuses())) {
           $default = array_keys(array_intersect_key($display_mode_options, $enabled_displays));
         }
+        natcasesort($display_mode_options);
         $form['modes']['display_modes_custom'] = [
           '#type' => 'checkboxes',
           '#title' => $this->t('Use custom display settings for the following @display_context modes', ['@display_context' => $this->displayContext]),
@@ -702,7 +703,7 @@ abstract class EntityDisplayFormBase extends EntityForm {
    *
    * @return array
    *
-   * @see drupal_render()
+   * @see \Drupal\Core\Render\RendererInterface::render()
    * @see \Drupal\Core\Render\Element\Table::preRenderTable()
    *
    * @deprecated in Drupal 8.0.0, will be removed before Drupal 9.0.0.
@@ -817,12 +818,12 @@ abstract class EntityDisplayFormBase extends EntityForm {
    * @return string|null
    *   The region name this row belongs to.
    */
-  public function getRowRegion($row) {
-    switch ($row['#row_type']) {
-      case 'field':
-      case 'extra_field':
-        return $row['region']['#value'] ?: 'hidden';
+  public function getRowRegion(&$row) {
+    $regions = $this->getRegions();
+    if (!isset($regions[$row['region']['#value']])) {
+      $row['region']['#value'] = 'hidden';
     }
+    return $row['region']['#value'];
   }
 
   /**
